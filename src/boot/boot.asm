@@ -14,17 +14,16 @@ start:
     jmp 0:step2
 
 step2:
-  cli                  ; Deshabilita interrupciones
-  mov ax, 0x7c0        ; Carga el segmento 0x7C0 en AX
-  mov ds, ax           ; Configura el segmento de datos (DS)
-  mov es, ax           ; Configura el segmento extra (ES)
-  mov ax, 0x00         ; Limpia AX
-  mov ss, ax           ; Configura el segmento de pila (SS) en 0x0000
-  mov sp, 0x7c0        ; Configura el puntero de pila (SP) en 0x07C0
-  sti                  ; Habilita interrupciones nuevamente
+    cli ; Clear Interrupts
+    mov ax, 0x00
+    mov ds, ax
+    mov es, ax
+    mov ss, ax
+    mov sp, 0x7c00
+    sti ; Enables Interrupts
 
 .load_protected:
-  cli
+    cli
     lgdt[gdt_descriptor]
     mov eax, cr0
     or eax, 0x1
